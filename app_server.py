@@ -30,11 +30,16 @@ def create_url():
         slug = generate_slug()
         
     url_db[slug] = original_url
-    
+
+    port = int(os.environ.get("PORT", 5001))
+    url = os.environ.get("URL", f"http://localhost:{port}")
+    short_url = f"{url}/{slug}"
+    print(f"Created short URL: {short_url} for original URL: {original_url}")
+
     return jsonify({
         "status": "success",
         "slug": slug,
-        "short_url": f"http://localhost:10000/{slug}"
+        "short_url": short_url
     }), 201
 
 @app.route('/<slug>', methods=['GET'])
