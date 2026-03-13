@@ -34,7 +34,7 @@ def create_url():
     return jsonify({
         "status": "success",
         "slug": slug,
-        "short_url": f"https://localhost:5000/{slug}"
+        "short_url": f"http://localhost:10000/{slug}"
     }), 201
 
 @app.route('/<slug>', methods=['GET'])
