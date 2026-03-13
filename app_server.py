@@ -1,7 +1,7 @@
 import secrets
 import string
 import os
-from flask import Flask, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify
 
 app = Flask(__name__)
 
@@ -52,6 +52,11 @@ def redirect_to_url(slug):
         return redirect(target_url)
     
     return jsonify({"error": "Short URL not found"}), 404
+
+@app.route('/')
+def home():
+    # This looks inside the /templates folder for index.html
+    return render_template('index.html')
 
 if __name__ == '__main__':
     # 1. Render provides a 'PORT' variable (usually 10000). 
