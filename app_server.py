@@ -1,5 +1,6 @@
 import secrets
 import string
+import os
 from flask import Flask, request, redirect, jsonify
 
 app = Flask(__name__)
@@ -48,6 +49,12 @@ def redirect_to_url(slug):
     return jsonify({"error": "Short URL not found"}), 404
 
 if __name__ == '__main__':
-    print("Starting URL Shortener Service on https://localhost:5001")
-    # Using adhoc for instant HTTPS
-    app.run(host='0.0.0.0', port=5001, ssl_context='adhoc')
+    # 1. Render provides a 'PORT' variable (usually 10000). 
+    # If it doesn't exist (like on your Mac), it defaults to 5001.
+    port = int(os.environ.get("PORT", 5001))
+    
+    print(f"Starting URL Shortener Service on port {port}")
+    
+    # 2. MUST remove ssl_context='adhoc' for Render/Docker.
+    # 3. host='0.0.0.0' is required for Docker to allow external traffic.
+    app.run(host='0.0.0.0', port=port)
